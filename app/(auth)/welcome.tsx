@@ -4,7 +4,8 @@ import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import { verticalScale } from "@/utils/styling";
 import React from "react";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Animated, { FadeIn } from "react-native-reanimated";
 
 const Welcome = () => {
   return (
@@ -15,7 +16,8 @@ const Welcome = () => {
             <Typo fontWeight="500">Sign In</Typo>
           </TouchableOpacity>
 
-          <Image
+          <Animated.Image
+            entering={FadeIn.duration(1000)}
             source={require("../../assets/images/welcome.png")}
             style={styles.welcomeImage}
             resizeMode="contain"
@@ -23,15 +25,21 @@ const Welcome = () => {
         </View>
 
         <View style={styles.footer}>
-          <View style={{ alignItems: "center" }}>
+          <Animated.View
+            style={{ alignItems: "center" }}
+            entering={FadeIn.duration(1000).springify().damping(12)}
+          >
             <Typo size={30} fontWeight={"800"}>
               Lorem ipsum dolor sit amet
             </Typo>
             <Typo size={30} fontWeight={"800"}>
               Lorem ipsum dolor
             </Typo>
-          </View>
-          <View style={{ alignItems: "center", gap: 2 }}>
+          </Animated.View>
+          <Animated.View
+            style={{ alignItems: "center", gap: 2 }}
+            entering={FadeIn.duration(1000).delay(100).springify().damping(12)}
+          >
             <View style={{ alignItems: "center" }}>
               <Typo size={17} color={colors.textLight}>
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
@@ -40,16 +48,19 @@ const Welcome = () => {
                 Lorem ipsum dolor sit amet consectetur adipisicing elit.
               </Typo>
             </View>
-          </View>
+          </Animated.View>
 
           {/* Button */}
-          <View style={styles.buttonContainer}>
+          <Animated.View
+            style={styles.buttonContainer}
+            entering={FadeIn.duration(1000).delay(200).springify().damping(12)}
+          >
             <Button>
               <Typo size={17} color={colors.neutral900} fontWeight={"600"}>
                 Get Started
               </Typo>
             </Button>
-          </View>
+          </Animated.View>
         </View>
       </View>
     </ScreenWrapper>
