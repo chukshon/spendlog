@@ -1,11 +1,18 @@
+import BackButton from "@/components/BackButton";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import { verticalScale } from "@/utils/styling";
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 const Login = () => {
-  return <ScreenWrapper>Hello</ScreenWrapper>;
+  return (
+    <ScreenWrapper>
+      <View style={styles.container}>
+        <BackButton />
+      </View>
+    </ScreenWrapper>
+  );
 };
 
 export default Login;
