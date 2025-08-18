@@ -19,7 +19,7 @@ const Login = () => {
 
   const handleSubmit = async () => {
     if (!emailRef.current || !passwordRef.current) {
-      Alert.alert("Please fill in all fields");
+      Alert.alert("Login, Please fill in all fields");
       return;
     }
 
@@ -89,7 +89,7 @@ const Login = () => {
         {/* Footer */}
         <View style={styles.footer}>
           <Typo size={15}>Don't have an account?</Typo>
-          <Pressable onPress={() => router.push("/(auth)/register" as any)}>
+          <Pressable onPress={() => router.navigate("/(auth)/register" as any)}>
             <Typo size={15} fontWeight={"700"} color={colors.primary}>
               Sign Up
             </Typo>
