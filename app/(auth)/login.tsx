@@ -94,11 +94,6 @@ const Login = () => {
               Sign Up
             </Typo>
           </Pressable>
-          {/* <TouchableOpacity>
-            <Typo size={14} color={colors.text}>
-              Sign up
-            </Typo>
-          </TouchableOpacity> */}
         </View>
       </View>
     </ScreenWrapper>
