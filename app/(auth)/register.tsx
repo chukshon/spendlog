@@ -4,19 +4,20 @@ import Input from "@/components/Input";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
+import { useAuth } from "@/contexts/authContext";
 import { verticalScale } from "@/utils/styling";
 import { useRouter } from "expo-router";
 import * as Icons from "phosphor-react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Alert, Pressable, StyleSheet, View } from "react-native";
 
 const Register = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
   const nameRef = useRef("");
-  const [loading, setLoading] = useState(false);
-
   const router = useRouter();
+
+  const { register: registerUser, isRegistering } = useAuth();
 
   const handleSubmit = async () => {
     if (!emailRef.current || !passwordRef.current) {
@@ -24,9 +25,15 @@ const Register = () => {
       return;
     }
 
-    console.log("email", emailRef.current);
-    console.log("password", passwordRef.current);
-    console.log("name", nameRef.current);
+    const res = await registerUser(
+      emailRef.current,
+      passwordRef.current,
+      nameRef.current
+    );
+
+    if (!res.success) {
+      Alert.alert("Register", res.msg);
+    }
   };
 
   return (
@@ -85,7 +92,7 @@ const Register = () => {
             }
           />
           <Button
-            loading={loading}
+            loading={isRegistering}
             onPress={handleSubmit}
             style={{ marginTop: spacingY._20 }}
           >
