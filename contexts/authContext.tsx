@@ -11,8 +11,11 @@ const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<UserType | null>(null);
+  const [isRegistering, setIsRegistering] = useState(false);
+  const [isLoggingIn, setIsLoggingIn] = useState(false);
 
   const login = async (email: string, password: string) => {
+    setIsLoggingIn(true);
     try {
       await signInWithEmailAndPassword(auth, email, password);
       return {
@@ -24,9 +27,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         success: false,
         msg,
       };
+    } finally {
+      setIsLoggingIn(false);
     }
   };
+
   const register = async (email: string, password: string, name: string) => {
+    setIsRegistering(true);
     try {
       let response = await createUserWithEmailAndPassword(
         auth,
@@ -47,6 +54,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         success: false,
         msg,
       };
+    } finally {
+      setIsRegistering(false);
     }
   };
 
@@ -77,6 +86,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     login,
     register,
     updateUserData,
+    isRegistering,
+    isLoggingIn,
   };
 
   return (
