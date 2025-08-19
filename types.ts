@@ -72,7 +72,7 @@ export type TransactionType = {
   description?: string;
   image?: any;
   uid?: string;
-  walletId: string;
+  accountId: string;
 };
 
 export type CategoryType = {
@@ -158,7 +158,7 @@ export type ResponseType = {
   msg?: string;
 };
 
-export type WalletType = {
+export type AccountType = {
   id?: string;
   name: string;
   amount?: number;
