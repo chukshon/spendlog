@@ -44,6 +44,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       };
     } catch (error: any) {
       let msg = error.message;
+      if (msg.includes("(auth/invalid-credential)")) {
+        msg = "Wrong Credentials";
+      }
+      if (msg.includes("(auth/invalid-email)")) {
+        msg = "Invalid Email";
+      }
       return {
         success: false,
         msg,
@@ -71,6 +77,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       };
     } catch (error: any) {
       let msg = error.message;
+      if (msg.includes("(auth/email-already-in-use)")) {
+        msg = "This email is already in use";
+      }
+      if (msg.includes("(auth/invalid-email)")) {
+        msg = "Invalid Email";
+      }
       return {
         success: false,
         msg,
