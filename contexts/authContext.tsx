@@ -26,6 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: firebaseUser.email || null,
           image: firebaseUser.photoURL || null,
         });
+        updateUserData(firebaseUser.uid);
         router.replace("/(tabs)" as any);
       } else {
         setUser(null);
