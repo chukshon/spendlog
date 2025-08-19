@@ -4,28 +4,28 @@ import Input from "@/components/Input";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
+import { useAuth } from "@/contexts/authContext";
 import { verticalScale } from "@/utils/styling";
 import { useRouter } from "expo-router";
 import * as Icons from "phosphor-react-native";
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import { Alert, Pressable, StyleSheet, View } from "react-native";
 
 const Login = () => {
   const emailRef = useRef("");
   const passwordRef = useRef("");
-  const [loading, setLoading] = useState(false);
-
   const router = useRouter();
+  const { login: loginUser, isLoggingIn } = useAuth();
 
   const handleSubmit = async () => {
     if (!emailRef.current || !passwordRef.current) {
       Alert.alert("Login, Please fill in all fields");
       return;
     }
-
-    console.log("email", emailRef.current);
-    console.log("password", passwordRef.current);
-    console.log("good to go");
+    const res = await loginUser(emailRef.current, passwordRef.current);
+    if (!res.success) {
+      Alert.alert("Login", res.msg);
+    }
   };
 
   return (
@@ -76,7 +76,7 @@ const Login = () => {
           </Typo>
 
           <Button
-            loading={loading}
+            loading={isLoggingIn}
             onPress={handleSubmit}
             style={{ marginTop: spacingY._20 }}
           >
