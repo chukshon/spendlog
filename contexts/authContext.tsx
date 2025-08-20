@@ -5,6 +5,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
   signInWithEmailAndPassword,
+  signOut,
 } from "firebase/auth";
 import { doc, getDoc, setDoc } from "firebase/firestore";
 import { createContext, useContext, useEffect, useState } from "react";
@@ -93,6 +94,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     }
   };
 
+  const handleLogout = async () => {
+    await signOut(auth);
+  };
+
   const updateUserData = async (uid: string) => {
     try {
       const docRef = doc(firestore, "users", uid);
@@ -119,6 +124,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setUser,
     login,
     register,
+    handleLogout,
     updateUserData,
     isRegistering,
     isLoggingIn,

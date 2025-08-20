@@ -1,15 +1,12 @@
 import Button from "@/components/Button";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
-import { auth } from "@/config/firebase";
-import { signOut } from "firebase/auth";
+import { useAuth } from "@/contexts/authContext";
 import React from "react";
 import { StyleSheet, Text } from "react-native";
 
 const Home = () => {
-  const handleLogout = async () => {
-    await signOut(auth);
-  };
+  const { handleLogout } = useAuth();
   return (
     <ScreenWrapper>
       <Text>Home</Text>
