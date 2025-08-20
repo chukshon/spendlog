@@ -9,11 +9,11 @@ import { verticalScale } from "@/utils/styling";
 import { Image } from "expo-image";
 import * as Icons from "phosphor-react-native";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
 import Animated, { FadeInDown } from "react-native-reanimated";
 
 const Profile = () => {
-  const { user } = useAuth();
+  const { user, handleLogout } = useAuth();
 
   const profileOptions: profileOptionType[] = [
     {
@@ -38,6 +38,31 @@ const Profile = () => {
       bgColor: "#e11d48",
     },
   ];
+
+  const handleShowLogoutAlert = () => {
+    Alert.alert("Logout", "Are you sure you want to logout?", [
+      {
+        text: "Cancel",
+        style: "cancel",
+        onPress: () => {
+          console.log("cancel");
+        },
+      },
+      {
+        text: "Logout",
+        style: "destructive",
+        onPress: () => {
+          handleLogout();
+        },
+      },
+    ]);
+  };
+  const handleSelectAccountOption = (item: profileOptionType) => {
+    if (item.title === "Logout") {
+      handleShowLogoutAlert();
+    }
+  };
+
   return (
     <ScreenWrapper>
       <View style={styles.container}>
@@ -81,7 +106,11 @@ const Profile = () => {
                   .damping(14)}
                 style={styles.listItem}
               >
-                <TouchableOpacity key={index} style={styles.flexRow}>
+                <TouchableOpacity
+                  key={index}
+                  style={styles.flexRow}
+                  onPress={() => handleSelectAccountOption(option)}
+                >
                   <View
                     style={[
                       styles.listIcon,
