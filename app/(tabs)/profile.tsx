@@ -3,7 +3,7 @@ import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
 import { colors, radius, spacingX, spacingY } from "@/constants/theme";
 import { useAuth } from "@/contexts/authContext";
-import { getProfileImage } from "@/services/ImageService";
+import { getProfileImage } from "@/services/imageService";
 import { profileOptionType } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import { Image } from "expo-image";
