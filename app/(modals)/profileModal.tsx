@@ -5,12 +5,13 @@ import Input from "@/components/Input";
 import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
+import { useAuth } from "@/contexts/authContext";
 import { getProfileImage } from "@/services/ImageService";
 import { UserDataType } from "@/types";
 import { scale, verticalScale } from "@/utils/styling";
 import { Image } from "expo-image";
 import * as Icons from "phosphor-react-native";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Alert,
   ScrollView,
@@ -20,6 +21,7 @@ import {
 } from "react-native";
 
 const ProfileModal = () => {
+  const { user } = useAuth();
   const [userData, setUserData] = useState<UserDataType>({
     name: "",
     image: null,
@@ -35,6 +37,15 @@ const ProfileModal = () => {
 
     console.log(name, image);
   };
+
+  useEffect(() => {
+    if (user) {
+      setUserData({
+        name: user?.name || "",
+        image: user?.image || null,
+      });
+    }
+  }, [user]);
 
   return (
     <ModalWrapper>
