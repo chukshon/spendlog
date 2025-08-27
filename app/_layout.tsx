@@ -14,6 +14,10 @@ const StackLayout = () => {
         name="(modals)/profileModal"
         options={{ presentation: "modal" }}
       />
+      <Stack.Screen
+        name="(modals)/accountModal"
+        options={{ presentation: "modal" }}
+      />
     </Stack>
   );
 };
