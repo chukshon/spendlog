@@ -7,6 +7,7 @@ import { getProfileImage } from "@/services/ImageService";
 import { profileOptionType } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import { Image } from "expo-image";
+import { useRouter } from "expo-router";
 import * as Icons from "phosphor-react-native";
 import React from "react";
 import { Alert, StyleSheet, TouchableOpacity, View } from "react-native";
@@ -14,6 +15,8 @@ import Animated, { FadeInDown } from "react-native-reanimated";
 
 const Profile = () => {
   const { user, handleLogout } = useAuth();
+
+  const router = useRouter();
 
   const profileOptions: profileOptionType[] = [
     {
@@ -60,6 +63,10 @@ const Profile = () => {
   const handleSelectAccountOption = (item: profileOptionType) => {
     if (item.title === "Logout") {
       handleShowLogoutAlert();
+    }
+
+    if (item.routeName) {
+      router.push(item.routeName);
     }
   };
 
@@ -156,6 +163,8 @@ const styles = StyleSheet.create({
     height: verticalScale(135),
     width: verticalScale(135),
     borderRadius: 200,
+    borderWidth: 1,
+    borderColor: colors.neutral500,
   },
   editIcon: {
     position: "absolute",
