@@ -43,7 +43,13 @@ const ImageUpload = ({
           placeholder={placeholder}
         />
       )}
-      {file && <FilledImageUploadState file={file} imageStyle={imageStyle} />}
+      {file && (
+        <FilledImageUploadState
+          file={file}
+          imageStyle={imageStyle}
+          onClear={onClear}
+        />
+      )}
     </View>
   );
 };
@@ -77,9 +83,11 @@ export const EmptyImageUploadState = ({
 export const FilledImageUploadState = ({
   imageStyle,
   file,
+  onClear,
 }: {
   imageStyle?: StyleProp<ViewStyle>;
   file: any;
+  onClear: () => void;
 }) => {
   return (
     <View style={[styles.image, imageStyle && imageStyle]}>
@@ -89,7 +97,7 @@ export const FilledImageUploadState = ({
         contentFit="cover"
         transition={100}
       />
-      <TouchableOpacity style={styles.deleteIcon}>
+      <TouchableOpacity style={styles.deleteIcon} onPress={onClear}>
         <Icons.XCircleIcon
           color={colors.white}
           size={verticalScale(24)}
