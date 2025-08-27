@@ -60,7 +60,7 @@ const ProfileModal = () => {
       updateUserData(user?.uid as string);
       Alert.alert("Success", res.msg);
 
-      // On Successfully close the modal and route to the previous screen
+      // On Successful update, route to the previous screen
       router.back();
     } else {
       Alert.alert("Error", res.msg);
