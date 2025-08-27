@@ -15,6 +15,7 @@ export const uploadFileToCloudinary = async (
 
     if (file && file.uri) {
       const formData = new FormData();
+      // Append the file to the form data
       formData.append("file", {
         uri: file.uri,
         name: "image/jpeg",
@@ -27,6 +28,7 @@ export const uploadFileToCloudinary = async (
       );
       formData.append("folder", folderName);
 
+      // Upload the file to cloudinary
       const response = await axios.post(CLOUDINARY_API_URL, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
