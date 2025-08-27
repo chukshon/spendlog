@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         router.replace("/(tabs)" as any);
       } else {
         setUser(null);
-        router.replace("/(auth)/welco me" as any);
+        router.replace("/(auth)/welcome" as any);
       }
     });
     return () => unsubscribe();
