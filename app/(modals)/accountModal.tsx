@@ -68,7 +68,7 @@ const AccountModal = () => {
           <View style={styles.inputContainer}>
             <Typo color={colors.neutral200}>Account Name</Typo>
             <Input
-              placeholder="Enter your name"
+              placeholder="Account Name"
               value={account.name}
               onChangeText={(value) => {
                 setAccount({ ...account, name: value });
