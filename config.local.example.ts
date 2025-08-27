@@ -6,3 +6,8 @@ export const firebaseConfig = {
   messagingSenderId: "your-sender-id",
   appId: "your-app-id",
 };
+
+export const cloudinaryConfig = {
+  CLOUDINARY_CLOUD_NAME: "your-cloud-name",
+  CLOUDINARY_UPLOAD_PRESET: "your-upload-preset",
+};
