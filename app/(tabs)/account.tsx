@@ -1,13 +1,29 @@
+import Loading from "@/components/Loading";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import Typo from "@/components/Typo";
 import { colors, radius, spacingX, spacingY } from "@/constants/theme";
+import AccountListItem from "@/containers/accounts/AccountListItem";
+import { useAuth } from "@/contexts/authContext";
+import useFetchData from "@/hooks/useFetchData";
+import { AccountType } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import { useRouter } from "expo-router";
+import { orderBy, where } from "firebase/firestore";
 import * as Icons from "phosphor-react-native";
 import React from "react";
-import { StyleSheet, TouchableOpacity, View } from "react-native";
+import { FlatList, StyleSheet, TouchableOpacity, View } from "react-native";
 
 const Account = () => {
+  const { user } = useAuth();
+  const {
+    data: accounts,
+    loading,
+    error,
+  } = useFetchData<AccountType>("accounts", [
+    where("uid", "==", user?.uid),
+    orderBy("createdAt", "desc"),
+  ]);
+
   const router = useRouter();
   const getTotalBalance = () => {
     return 2344;
@@ -44,6 +60,17 @@ const Account = () => {
               />
             </TouchableOpacity>
           </View>
+
+          {/* Accounts List */}
+          {loading && <Loading />}
+
+          <FlatList
+            data={accounts}
+            renderItem={({ item, index }) => (
+              <AccountListItem item={item} index={index} router={router} />
+            )}
+            contentContainerStyle={styles.listStyle}
+          />
         </View>
       </View>
     </ScreenWrapper>
