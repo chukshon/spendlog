@@ -10,18 +10,34 @@ import { useAuth } from "@/contexts/authContext";
 import { createOrUpdateAccount } from "@/services/accountService";
 import { AccountType } from "@/types";
 import { scale } from "@/utils/styling";
-import { useRouter } from "expo-router";
-import React, { useState } from "react";
+import { useLocalSearchParams, useRouter } from "expo-router";
+import React, { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
 
 const AccountModal = () => {
-  const { user, updateUserData } = useAuth();
+  const router = useRouter();
+  const { user } = useAuth();
+  const [loading, setLoading] = useState(false);
   const [account, setAccount] = useState<AccountType>({
     name: "",
     image: null,
   });
-  const [loading, setLoading] = useState(false);
-  const router = useRouter();
+
+  const accountParams: {
+    accountName: string;
+    accountImage: string;
+    accountId: string;
+  } = useLocalSearchParams();
+
+  // Get the old account data from the params if it exists and set the account state
+  useEffect(() => {
+    if (accountParams?.accountId) {
+      setAccount({
+        name: accountParams.accountName,
+        image: accountParams.accountImage,
+      });
+    }
+  }, [accountParams]);
 
   const onSelectImage = (file: any) => {
     setAccount({ ...account, image: file });
@@ -43,6 +59,11 @@ const AccountModal = () => {
       image,
       uid: user?.uid as string,
     };
+
+    if (accountParams?.accountId) {
+      data.id = accountParams.accountId;
+    }
+
     setLoading(true);
     const res = await createOrUpdateAccount(data);
     setLoading(false);
@@ -58,7 +79,7 @@ const AccountModal = () => {
     <ModalWrapper>
       <View style={styles.container}>
         <Header
-          title="New Account"
+          title={accountParams?.accountId ? "Update Account" : "New Account"}
           leftIcon={<BackButton />}
           style={{ marginBottom: spacingY._10 }}
         />
@@ -90,7 +111,7 @@ const AccountModal = () => {
       <View style={styles.footer}>
         <Button onPress={onSubmit} loading={loading} style={{ flex: 1 }}>
           <Typo color={colors.black} fontWeight={"700"} size={18}>
-            Add Account
+            {accountParams?.accountId ? "Update Account" : "Add Account"}
           </Typo>
         </Button>
       </View>
