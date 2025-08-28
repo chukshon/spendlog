@@ -8,7 +8,7 @@ export const updateUser = async (
   updatedUserData: UserDataType
 ): Promise<ResponseType> => {
   try {
-    if (updatedUserData.image && updatedUserData?.image?.uri) {
+    if (updatedUserData.image) {
       // Upload the image to cloudinary
       const imageUploadResponse = await uploadFileToCloudinary(
         updatedUserData?.image?.uri,
