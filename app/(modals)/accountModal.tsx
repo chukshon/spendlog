@@ -33,7 +33,7 @@ const AccountModal = () => {
 
   const onSubmit = async () => {
     let { name, image } = account;
-    if (!name.trim()) {
+    if (!name.trim() || !image) {
       Alert.alert("User, Please fill all the fields");
       return;
     }
