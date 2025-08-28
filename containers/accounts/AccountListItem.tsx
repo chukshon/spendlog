@@ -18,13 +18,23 @@ const AccountListItem = ({
   index: number;
   router: Router;
 }) => {
+  const openWallet = () => {
+    router.push({
+      pathname: "/(modals)/accountModal",
+      params: {
+        accountId: item?.id,
+        accountName: item?.name,
+        accountImage: item?.image,
+      },
+    });
+  };
   return (
     <Animated.View
       entering={FadeInDown.delay(index * 50)
         .springify()
         .damping(13)}
     >
-      <TouchableOpacity style={styles.container}>
+      <TouchableOpacity style={styles.container} onPress={openWallet}>
         <View style={styles.imageContainer}>
           <Image
             source={item?.image}
