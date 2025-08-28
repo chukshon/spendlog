@@ -7,7 +7,7 @@ import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import { useAuth } from "@/contexts/authContext";
-import { updateUser } from "@/services/userService";
+import { createOrUpdateAccount } from "@/services/accountService";
 import { AccountType } from "@/types";
 import { scale } from "@/utils/styling";
 import { useRouter } from "expo-router";
@@ -38,16 +38,16 @@ const AccountModal = () => {
       return;
     }
 
+    const data: AccountType = {
+      name,
+      image,
+      uid: user?.uid as string,
+    };
     setLoading(true);
-    const res = await updateUser(user?.uid as string, account);
+    const res = await createOrUpdateAccount(data);
     setLoading(false);
 
     if (res.success) {
-      // Update user data in the auth context
-      updateUserData(user?.uid as string);
-      Alert.alert("Success", res.msg);
-
-      // On Successful update, route to the previous screen
       router.back();
     } else {
       Alert.alert("Error", res.msg);
