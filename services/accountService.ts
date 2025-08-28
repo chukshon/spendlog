@@ -1,6 +1,6 @@
 import { firestore } from "@/config/firebase";
 import { AccountType, ResponseType } from "@/types";
-import { collection, doc, setDoc } from "firebase/firestore";
+import { collection, deleteDoc, doc, setDoc } from "firebase/firestore";
 import { uploadFileToCloudinary } from "./imageService";
 
 export const createOrUpdateAccount = async (
@@ -50,5 +50,16 @@ export const createOrUpdateAccount = async (
       success: false,
       msg: error.message,
     };
+  }
+};
+
+export const deleteAccount = async (
+  accountId: string
+): Promise<ResponseType> => {
+  try {
+    await deleteDoc(doc(firestore, "accounts", accountId));
+    return { success: true, msg: "Account deleted successfully" };
+  } catch (error: any) {
+    return { success: false, msg: error.message };
   }
 };
