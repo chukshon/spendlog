@@ -7,6 +7,7 @@ import { Router } from "expo-router";
 import * as Icons from "phosphor-react-native";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 
 const AccountListItem = ({
   item,
@@ -18,7 +19,11 @@ const AccountListItem = ({
   router: Router;
 }) => {
   return (
-    <View>
+    <Animated.View
+      entering={FadeInDown.delay(index * 50)
+        .springify()
+        .damping(13)}
+    >
       <TouchableOpacity style={styles.container}>
         <View style={styles.imageContainer}>
           <Image
@@ -41,7 +46,7 @@ const AccountListItem = ({
           color={colors.white}
         />
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
