@@ -7,10 +7,14 @@ import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import { useAuth } from "@/contexts/authContext";
-import { createOrUpdateAccount } from "@/services/accountService";
+import {
+  createOrUpdateAccount,
+  deleteAccount,
+} from "@/services/accountService";
 import { AccountType } from "@/types";
-import { scale } from "@/utils/styling";
+import { scale, verticalScale } from "@/utils/styling";
 import { useLocalSearchParams, useRouter } from "expo-router";
+import * as Icons from "phosphor-react-native";
 import React, { useEffect, useState } from "react";
 import { Alert, ScrollView, StyleSheet, View } from "react-native";
 
@@ -45,6 +49,39 @@ const AccountModal = () => {
 
   const onClearImage = () => {
     setAccount({ ...account, image: null });
+  };
+
+  const showDeleteAccountAlert = () => {
+    Alert.alert(
+      "Delete Account",
+      "Are you sure you want to delete this account?",
+      [
+        {
+          text: "Cancel",
+          onPress: () => {
+            console.log("cancel");
+          },
+          style: "cancel",
+        },
+        {
+          text: "Delete",
+          onPress: onDeleteAccount,
+          style: "destructive",
+        },
+      ]
+    );
+  };
+
+  const onDeleteAccount = async () => {
+    if (!accountParams?.accountId) return;
+    setLoading(true);
+    const res = await deleteAccount(accountParams?.accountId);
+    setLoading(false);
+    if (res.success) {
+      router.back();
+    } else {
+      Alert.alert("Account", res.msg);
+    }
   };
 
   const onSubmit = async () => {
@@ -109,6 +146,22 @@ const AccountModal = () => {
       </View>
 
       <View style={styles.footer}>
+        {accountParams?.accountId && !loading && (
+          <Button
+            onPress={showDeleteAccountAlert}
+            loading={loading}
+            style={{
+              backgroundColor: colors.rose,
+              paddingHorizontal: spacingX._15,
+            }}
+          >
+            <Icons.TrashIcon
+              color={colors.white}
+              size={verticalScale(20)}
+              weight="bold"
+            />
+          </Button>
+        )}
         <Button onPress={onSubmit} loading={loading} style={{ flex: 1 }}>
           <Typo color={colors.black} fontWeight={"700"} size={18}>
             {accountParams?.accountId ? "Update Account" : "Add Account"}
