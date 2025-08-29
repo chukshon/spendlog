@@ -162,6 +162,7 @@ const AccountModal = () => {
             />
           </Button>
         )}
+
         <Button onPress={onSubmit} loading={loading} style={{ flex: 1 }}>
           <Typo color={colors.black} fontWeight={"700"} size={18}>
             {accountParams?.accountId ? "Update Account" : "Add Account"}
