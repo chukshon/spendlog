@@ -1,19 +1,83 @@
+import { expenseCategories } from "@/constants/data";
+import { colors, radius, spacingX, spacingY } from "@/constants/theme";
 import { TransactionItemProps } from "@/types";
+import { verticalScale } from "@/utils/styling";
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Typo from "./Typo";
 
 const TransactionListItem = ({
   item,
   index,
   handleClick,
 }: TransactionItemProps) => {
+  let category = expenseCategories["groceries"];
+  const IconComponent = category.icon;
   return (
     <View>
-      <Text>Transaction Item</Text>
+      <TouchableOpacity style={styles.row} onPress={() => handleClick(item)}>
+        <View style={[styles.icon, { backgroundColor: category.bgColor }]}>
+          {IconComponent && (
+            <IconComponent
+              size={verticalScale(25)}
+              weight="fill"
+              color={colors.white}
+            />
+          )}
+        </View>
+
+        <View style={styles.categoryDes}>
+          <Typo size={17}>{category.label}</Typo>
+          <Typo
+            size={12}
+            color={colors.neutral400}
+            textProps={{ numberOfLines: 1 }}
+          >
+            Paid Wifi Bill
+          </Typo>
+        </View>
+
+        <View style={styles.amountDate}>
+          <Typo fontWeight={"600"} color={colors.rose}>
+            - $23
+          </Typo>
+          <Typo size={13} color={colors.neutral400}>
+            12 Jan
+          </Typo>
+        </View>
+      </TouchableOpacity>
     </View>
   );
 };
 
 export default TransactionListItem;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+    gap: spacingX._12,
+    marginBottom: spacingY._12,
+    backgroundColor: colors.neutral800,
+    padding: spacingX._10,
+    paddingHorizontal: spacingY._10,
+    borderRadius: radius._17,
+  },
+  icon: {
+    height: verticalScale(44),
+    aspectRatio: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: radius._12,
+    borderCurve: "continuous",
+  },
+  categoryDes: {
+    flex: 1,
+    gap: 2.5,
+  },
+  amountDate: {
+    alignItems: "flex-end",
+    gap: 3,
+  },
+});
