@@ -61,7 +61,7 @@ const TransactionModal = () => {
   const onDateChange = (event: DateTimePickerEvent, selectedDate: any) => {
     const currentDate = selectedDate || transaction.date;
     setTransaction({ ...transaction, date: currentDate });
-    setShowDatePicker(false);
+    setShowDatePicker(Platform.OS === "ios" ? true : false);
   };
 
   const onSelectImage = (file: any) => {
@@ -255,7 +255,7 @@ const TransactionModal = () => {
                   value={transaction.date as Date}
                   textColor={colors.white}
                   mode={"date"}
-                  display="spinner"
+                  display={Platform.OS === "ios" ? "spinner" : "default"}
                   onChange={onDateChange}
                 />
                 {Platform.OS === "ios" && (
