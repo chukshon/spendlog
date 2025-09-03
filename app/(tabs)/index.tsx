@@ -6,15 +6,17 @@ import { colors, spacingX, spacingY } from "@/constants/theme";
 import BalanceCard from "@/containers/home/BalanceCard";
 import { useAuth } from "@/contexts/authContext";
 import { verticalScale } from "@/utils/styling";
+import { useRouter } from "expo-router";
 import * as Icons from "phosphor-react-native";
 import React from "react";
 import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
   const { user } = useAuth();
+  const router = useRouter();
 
   const handleClickAddTransaction = () => {
-    console.log("add transaction");
+    router.push("/(modals)/transactionModal");
   };
   return (
     <ScreenWrapper>
