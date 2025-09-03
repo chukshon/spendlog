@@ -44,7 +44,12 @@ const Home = () => {
           </View>
 
           {/* Transaction List */}
-          <TransactionList title="Recent Transactions" />
+          <TransactionList
+            data={[]}
+            loading={false}
+            title="Recent Transactions"
+            emptyListMessage="No transactions found"
+          />
         </ScrollView>
       </View>
     </ScreenWrapper>

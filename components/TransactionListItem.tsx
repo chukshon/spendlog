@@ -1,10 +1,15 @@
+import { TransactionItemProps } from "@/types";
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
 
-const TransactionListItem = () => {
+const TransactionListItem = ({
+  item,
+  index,
+  handleClick,
+}: TransactionItemProps) => {
   return (
     <View>
-      <Text>TransactionListItem</Text>
+      <Text>Transaction Item</Text>
     </View>
   );
 };
