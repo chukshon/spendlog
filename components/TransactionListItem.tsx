@@ -4,6 +4,7 @@ import { TransactionItemProps } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import React from "react";
 import { StyleSheet, TouchableOpacity, View } from "react-native";
+import Animated, { FadeInDown } from "react-native-reanimated";
 import Typo from "./Typo";
 
 const TransactionListItem = ({
@@ -14,7 +15,11 @@ const TransactionListItem = ({
   let category = expenseCategories["groceries"];
   const IconComponent = category.icon;
   return (
-    <View>
+    <Animated.View
+      entering={FadeInDown.delay(index * 50)
+        .springify()
+        .damping(14)}
+    >
       <TouchableOpacity style={styles.row} onPress={() => handleClick(item)}>
         <View style={[styles.icon, { backgroundColor: category.bgColor }]}>
           {IconComponent && (
@@ -46,7 +51,7 @@ const TransactionListItem = ({
           </Typo>
         </View>
       </TouchableOpacity>
-    </View>
+    </Animated.View>
   );
 };
 
