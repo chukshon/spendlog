@@ -1,4 +1,5 @@
 import ScreenWrapper from "@/components/ScreenWrapper";
+import TransactionList from "@/components/TransactionList";
 import Typo from "@/components/Typo";
 import { colors, spacingX, spacingY } from "@/constants/theme";
 import BalanceCard from "@/containers/home/BalanceCard";
@@ -41,6 +42,9 @@ const Home = () => {
           <View>
             <BalanceCard />
           </View>
+
+          {/* Transaction List */}
+          <TransactionList title="Recent Transactions" />
         </ScrollView>
       </View>
     </ScreenWrapper>
