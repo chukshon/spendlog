@@ -33,16 +33,6 @@ const AccountModal = () => {
     accountId: string;
   } = useLocalSearchParams();
 
-  // Get the old account data from the params if it exists and set the account state
-  useEffect(() => {
-    if (accountParams?.accountId) {
-      setAccount({
-        name: accountParams.accountName,
-        image: accountParams.accountImage,
-      });
-    }
-  }, [accountParams]);
-
   const onSelectImage = (file: any) => {
     setAccount({ ...account, image: file });
   };
@@ -112,6 +102,16 @@ const AccountModal = () => {
     }
   };
 
+  // Get the old account data from the params if it exists and set the account state
+  useEffect(() => {
+    if (accountParams?.accountId) {
+      setAccount({
+        name: accountParams.accountName,
+        image: accountParams.accountImage,
+      });
+    }
+  }, [accountParams]);
+
   return (
     <ModalWrapper>
       <View style={styles.container}>
@@ -134,7 +134,7 @@ const AccountModal = () => {
             />
           </View>
           <View style={styles.inputContainer}>
-            <Typo color={colors.neutral200}>Account Name</Typo>
+            <Typo color={colors.neutral200}>Account Image</Typo>
             <ImageUpload
               file={account.image}
               placeholder="Upload Image"
