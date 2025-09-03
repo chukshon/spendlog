@@ -1,5 +1,5 @@
 import Typo from "@/components/Typo";
-import { colors, radius, spacingX, spacingY } from "@/constants/theme";
+import { colors, spacingY } from "@/constants/theme";
 import { TransactionListType } from "@/types";
 import { verticalScale } from "@/utils/styling";
 import { FlashList } from "@shopify/flash-list";
@@ -66,32 +66,5 @@ const styles = StyleSheet.create({
   },
   list: {
     minHeight: 3,
-  },
-  row: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    gap: spacingX._12,
-    marginBottom: spacingY._12,
-    backgroundColor: colors.neutral800,
-    padding: spacingX._10,
-    paddingHorizontal: spacingY._10,
-    borderRadius: radius._17,
-  },
-  icon: {
-    height: verticalScale(44),
-    aspectRatio: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    borderRadius: radius._12,
-    borderCurve: "continuous",
-  },
-  categoryDes: {
-    flex: 1,
-    gap: 2.5,
-  },
-  amountData: {
-    alignItems: "flex-end",
-    gap: 3,
   },
 });
