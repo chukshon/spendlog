@@ -10,17 +10,29 @@ import { useAuth } from "@/contexts/authContext";
 import useFetchData from "@/hooks/useFetchData";
 import { AccountType, TransactionType } from "@/types";
 import { scale, verticalScale } from "@/utils/styling";
+import DateTimePicker, {
+  DateTimePickerEvent,
+} from "@react-native-community/datetimepicker";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { orderBy, where } from "firebase/firestore";
 import * as Icons from "phosphor-react-native";
 import React, { useState } from "react";
-import { Alert, ScrollView, StyleSheet, View } from "react-native";
+import {
+  Alert,
+  Platform,
+  Pressable,
+  ScrollView,
+  StyleSheet,
+  TouchableOpacity,
+  View,
+} from "react-native";
 import { Dropdown } from "react-native-element-dropdown";
 
 const TransactionModal = () => {
   const router = useRouter();
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [transaction, setTransaction] = useState<TransactionType>({
     type: "expense",
     amount: 0,
@@ -45,6 +57,12 @@ const TransactionModal = () => {
     transactionImage: string;
     transactionId: string;
   } = useLocalSearchParams();
+
+  const onDateChange = (event: DateTimePickerEvent, selectedDate: any) => {
+    const currentDate = selectedDate || transaction.date;
+    setTransaction({ ...transaction, date: currentDate });
+    setShowDatePicker(false);
+  };
 
   const onSelectImage = (file: any) => {
     setTransaction({ ...transaction, image: file });
@@ -76,15 +94,15 @@ const TransactionModal = () => {
   };
 
   const onDeleteTransaction = async () => {
-    if (!transactionParams?.transactionId) return;
-    setLoading(true);
-    const res = await deleteTransaction(transactionParams?.transactionId);
-    setLoading(false);
-    if (res.success) {
-      router.back();
-    } else {
-      Alert.alert("Transaction", res.msg);
-    }
+    // if (!transactionParams?.transactionId) return;
+    // setLoading(true);
+    // const res = await deleteTransaction(transactionParams?.transactionId);
+    // setLoading(false);
+    // if (res.success) {
+    //   router.back();
+    // } else {
+    //   Alert.alert("Transaction", res.msg);
+    // }
   };
 
   const onSubmit = async () => {
@@ -218,6 +236,43 @@ const TransactionModal = () => {
           )}
 
           {/* Date Picker */}
+          <View style={styles.inputContainer}>
+            <Typo color={colors.neutral200}>Date</Typo>
+            {!showDatePicker && (
+              <Pressable
+                style={styles.dateInput}
+                onPress={() => setShowDatePicker(true)}
+              >
+                <Typo size={14}>
+                  {(transaction.date as Date).toLocaleString()}
+                </Typo>
+              </Pressable>
+            )}
+            {showDatePicker && (
+              <View style={Platform.OS === "ios" && styles.iosDatePicker}>
+                <DateTimePicker
+                  themeVariant="dark"
+                  value={transaction.date as Date}
+                  textColor={colors.white}
+                  mode={"date"}
+                  display="spinner"
+                  onChange={onDateChange}
+                />
+                {Platform.OS === "ios" && (
+                  <TouchableOpacity
+                    style={styles.datePickerButton}
+                    onPress={() => {
+                      setShowDatePicker(false);
+                    }}
+                  >
+                    <Typo size={15} fontWeight={"500"}>
+                      Ok
+                    </Typo>
+                  </TouchableOpacity>
+                )}
+              </View>
+            )}
+          </View>
 
           {/* Transaction Image */}
           <View style={styles.inputContainer}>
