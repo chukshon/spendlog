@@ -107,27 +107,27 @@ const TransactionModal = () => {
   };
 
   const onSubmit = async () => {
-    // let { name, image } = transaction;
-    // if (!name.trim() || !image) {
-    //   Alert.alert("User, Please fill all the fields");
-    //   return;
-    // }
-    // const data: TransactionType = {
-    //   name,
-    //   image,
-    //   uid: user?.uid as string,
-    // };
-    // if (transactionParams?.transactionId) {
-    //   data.id = transactionParams.transactionId;
-    // }
-    // setLoading(true);
-    // const res = await createOrUpdateAccount(data);
-    // setLoading(false);
-    // if (res.success) {
-    //   router.back();
-    // } else {
-    //   Alert.alert("Error", res.msg);
-    // }
+    const { type, amount, description, category, date, accountId, image } =
+      transaction;
+
+    if (!accountId || !date || !amount || (type === "expense" && !category)) {
+      Alert.alert("Transaction", "Please fill all the fields");
+      return;
+    }
+
+    console.log("good to go");
+    let transactionData: TransactionType = {
+      type,
+      amount,
+      description,
+      category,
+      date,
+      accountId,
+      image,
+      uid: user?.uid as string,
+    };
+
+    console.log(transactionData);
   };
 
   // // Get the old account data from the params if it exists and set the account state
@@ -375,7 +375,7 @@ const TransactionModal = () => {
           <Typo color={colors.black} fontWeight={"700"} size={18}>
             {transactionParams?.transactionId
               ? "Update Transaction"
-              : "Add Transaction"}
+              : "Save Transaction"}
           </Typo>
         </Button>
       </View>
