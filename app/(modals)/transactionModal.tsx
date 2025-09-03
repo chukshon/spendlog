@@ -2,6 +2,7 @@ import BackButton from "@/components/BackButton";
 import Button from "@/components/Button";
 import Header from "@/components/Header";
 import ImageUpload from "@/components/ImageUpload";
+import Input from "@/components/Input";
 import ModalWrapper from "@/components/ModalWrapper";
 import Typo from "@/components/Typo";
 import { expenseCategories, transactionTypes } from "@/constants/data";
@@ -159,7 +160,9 @@ const TransactionModal = () => {
         >
           {/* Transaction Type */}
           <View style={styles.inputContainer}>
-            <Typo color={colors.neutral200}>Transaction Type</Typo>
+            <Typo color={colors.neutral200} size={16}>
+              Transaction Type
+            </Typo>
 
             <Dropdown
               style={styles.dropdownContainer}
@@ -184,7 +187,9 @@ const TransactionModal = () => {
 
           {/* Account */}
           <View style={styles.inputContainer}>
-            <Typo color={colors.neutral200}>Account</Typo>
+            <Typo color={colors.neutral200} size={16}>
+              Account
+            </Typo>
             <Dropdown
               style={styles.dropdownContainer}
               activeColor={colors.neutral700}
@@ -212,7 +217,9 @@ const TransactionModal = () => {
           {/* Expense Category */}
           {transaction.type === "expense" && (
             <View style={styles.inputContainer}>
-              <Typo color={colors.neutral200}>Expense Category</Typo>
+              <Typo color={colors.neutral200} size={16}>
+                Expense Category
+              </Typo>
               <Dropdown
                 style={styles.dropdownContainer}
                 activeColor={colors.neutral700}
@@ -237,7 +244,9 @@ const TransactionModal = () => {
 
           {/* Date Picker */}
           <View style={styles.inputContainer}>
-            <Typo color={colors.neutral200}>Date</Typo>
+            <Typo color={colors.neutral200} size={16}>
+              Date
+            </Typo>
             {!showDatePicker && (
               <Pressable
                 style={styles.dateInput}
@@ -274,9 +283,66 @@ const TransactionModal = () => {
             )}
           </View>
 
-          {/* Transaction Image */}
+          {/* Amount */}
           <View style={styles.inputContainer}>
-            <Typo color={colors.neutral200}>Transaction Image</Typo>
+            <Typo color={colors.neutral200} size={16}>
+              Amount
+            </Typo>
+            <Input
+              // placeholder="Account Name"
+              value={transaction.amount.toString()}
+              keyboardType="numeric"
+              onChangeText={(value) => {
+                setTransaction({
+                  ...transaction,
+                  amount: Number(value.replace(/[^0-9]/g, "")),
+                });
+              }}
+            />
+          </View>
+
+          {/* Description */}
+          <View style={styles.inputContainer}>
+            <View style={styles.flexRow}>
+              <Typo color={colors.neutral200} size={16}>
+                Description
+              </Typo>
+              <Typo color={colors.neutral500} size={14}>
+                (Optional)
+              </Typo>
+            </View>
+
+            <Input
+              // placeholder="Account Name"
+              value={transaction.description}
+              multiline
+              containerStyle={{
+                flexDirection: "row",
+                height: verticalScale(100),
+                alignItems: "flex-start",
+                paddingVertical: 15,
+              }}
+              keyboardType="numeric"
+              onChangeText={(value) => {
+                setTransaction({
+                  ...transaction,
+                  description: value,
+                });
+              }}
+            />
+          </View>
+
+          {/* Transaction Receipt */}
+          <View style={styles.inputContainer}>
+            <View style={styles.flexRow}>
+              <Typo color={colors.neutral200} size={16}>
+                Receipt
+              </Typo>
+              <Typo color={colors.neutral500} size={14}>
+                (Optional)
+              </Typo>
+            </View>
+
             <ImageUpload
               file={transaction.image}
               placeholder="Upload Image"
