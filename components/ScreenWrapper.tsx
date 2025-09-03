@@ -14,7 +14,7 @@ const height = Dimensions.get("window").height;
 const ScreenWrapper = ({ style, children }: ScreenWrapperProps) => {
   return (
     <View style={[styles.container, style]}>
-      <StatusBar barStyle="light-content" />
+      <StatusBar barStyle="light-content" backgroundColor={colors.neutral900} />
       {children}
     </View>
   );
@@ -25,7 +25,7 @@ export default ScreenWrapper;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    paddingTop: Platform.OS === "ios" ? height * 0.06 : 50,
+    paddingTop: Platform.OS === "ios" ? height * 0.06 : 0,
     backgroundColor: colors.neutral900,
   },
 });
