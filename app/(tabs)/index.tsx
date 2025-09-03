@@ -1,3 +1,4 @@
+import Button from "@/components/Button";
 import ScreenWrapper from "@/components/ScreenWrapper";
 import TransactionList from "@/components/TransactionList";
 import Typo from "@/components/Typo";
@@ -11,6 +12,10 @@ import { ScrollView, StyleSheet, TouchableOpacity, View } from "react-native";
 
 const Home = () => {
   const { user } = useAuth();
+
+  const handleClickAddTransaction = () => {
+    console.log("add transaction");
+  };
   return (
     <ScreenWrapper>
       <View style={styles.container}>
@@ -51,6 +56,17 @@ const Home = () => {
             emptyListMessage="No transactions found"
           />
         </ScrollView>
+
+        <Button
+          style={styles.floatingButton}
+          onPress={handleClickAddTransaction}
+        >
+          <Icons.PlusIcon
+            weight="bold"
+            size={verticalScale(24)}
+            color={colors.black}
+          />
+        </Button>
       </View>
     </ScreenWrapper>
   );
